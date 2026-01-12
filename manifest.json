@@ -4,7 +4,7 @@
   "description": "Convert Mexican Pesos to Japanese Yen with history tracking",
   "start_url": "/index.html",
   "display": "standalone",
-  "background_color": "#FFFFFF",
+  "background_color": "#FFF5F6",
   "theme_color": "#E60012",
   "orientation": "portrait",
   "icons": [

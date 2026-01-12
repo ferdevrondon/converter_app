@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mxn-jpy-converter-v1';
+const CACHE_NAME = 'mxn-jpy-converter-v2';
 const urlsToCache = [
   '/index.html',
   '/app.js',

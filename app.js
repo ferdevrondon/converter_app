@@ -4,6 +4,72 @@ let conversionHistory = [];
 let lastRateUpdate = null;
 let isLoadingRate = false;
 
+let direction = 'MXN_TO_JPY';
+
+function setElementClasses(el, removeClasses, addClasses) {
+    if (!el) return;
+    removeClasses.forEach(c => el.classList.remove(c));
+    addClasses.forEach(c => el.classList.add(c));
+}
+
+function applyCardTheme({ isFromJPY }) {
+    const fromCard = document.getElementById('from-card');
+    const toCard = document.getElementById('to-card');
+
+    const fromLabel = document.getElementById('from-label');
+    const toLabel = document.getElementById('to-label');
+    const fromCountry = document.getElementById('from-country');
+    const toCountry = document.getElementById('to-country');
+    const fromSymbol = document.getElementById('from-symbol');
+    const toSymbol = document.getElementById('to-symbol');
+
+    const fromAmount = document.getElementById('mxn-amount');
+    const toAmount = document.getElementById('jpy-amount');
+
+    const gradientClasses = ['bg-gradient-to-br', 'from-primary-red', 'to-deep-red', 'shadow-xl', 'shadow-primary-red/20'];
+    const whiteCardClasses = ['bg-white/85', 'backdrop-blur-md', 'border', 'border-primary-red/10', 'shadow-lg', 'shadow-primary-red/10'];
+
+    const labelGray = ['text-gray-400'];
+    const labelWhite = ['text-white/60'];
+
+    const countryGray = ['text-gray-500'];
+    const countryWhite = ['text-white/80'];
+
+    const amountBlack = ['text-black'];
+    const amountWhite = ['text-white'];
+
+    const symbolGray = ['text-gray-400'];
+    const symbolWhite = ['text-white/60'];
+
+    if (isFromJPY) {
+        setElementClasses(fromCard, whiteCardClasses, gradientClasses);
+        setElementClasses(toCard, gradientClasses, whiteCardClasses);
+
+        setElementClasses(fromLabel, labelGray, labelWhite);
+        setElementClasses(fromCountry, countryGray, countryWhite);
+        setElementClasses(fromAmount, amountBlack, amountWhite);
+        setElementClasses(fromSymbol, symbolGray, symbolWhite);
+
+        setElementClasses(toLabel, labelWhite, labelGray);
+        setElementClasses(toCountry, countryWhite, countryGray);
+        setElementClasses(toAmount, amountWhite, amountBlack);
+        setElementClasses(toSymbol, symbolWhite, symbolGray);
+    } else {
+        setElementClasses(fromCard, gradientClasses, whiteCardClasses);
+        setElementClasses(toCard, whiteCardClasses, gradientClasses);
+
+        setElementClasses(fromLabel, labelWhite, labelGray);
+        setElementClasses(fromCountry, countryWhite, countryGray);
+        setElementClasses(fromAmount, amountWhite, amountBlack);
+        setElementClasses(fromSymbol, symbolWhite, symbolGray);
+
+        setElementClasses(toLabel, labelGray, labelWhite);
+        setElementClasses(toCountry, countryGray, countryWhite);
+        setElementClasses(toAmount, amountBlack, amountWhite);
+        setElementClasses(toSymbol, symbolGray, symbolWhite);
+    }
+}
+
 function navigateTo(screen) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     document.getElementById(`${screen}-screen`).classList.add('active');
@@ -37,10 +103,13 @@ function deleteDigit() {
 
 function updateDisplay() {
     const mxnValue = parseFloat(currentAmount) || 0;
-    const jpyValue = mxnValue * EXCHANGE_RATE;
+    const fromValue = mxnValue;
+    const toValue = direction === 'MXN_TO_JPY' ? (fromValue * EXCHANGE_RATE) : (fromValue / EXCHANGE_RATE);
     
-    document.getElementById('mxn-amount').textContent = formatNumber(mxnValue);
-    document.getElementById('jpy-amount').textContent = formatNumber(jpyValue);
+    const fromAmountEl = document.getElementById('mxn-amount');
+    const toAmountEl = document.getElementById('jpy-amount');
+    if (fromAmountEl) fromAmountEl.textContent = formatNumber(fromValue);
+    if (toAmountEl) toAmountEl.textContent = formatNumber(toValue);
 }
 
 function formatNumber(num) {
@@ -51,23 +120,57 @@ function formatNumber(num) {
 }
 
 function swapCurrencies() {
-    alert('Currency swap feature coming soon!');
+    direction = direction === 'MXN_TO_JPY' ? 'JPY_TO_MXN' : 'MXN_TO_JPY';
+    
+    const fromLabel = document.getElementById('from-label');
+    const toLabel = document.getElementById('to-label');
+    const fromCountry = document.getElementById('from-country');
+    const toCountry = document.getElementById('to-country');
+    const fromSymbol = document.getElementById('from-symbol');
+    const toSymbol = document.getElementById('to-symbol');
+    const fromFlag = document.getElementById('from-flag');
+    
+    if (direction === 'MXN_TO_JPY') {
+        if (fromLabel) fromLabel.textContent = 'From MXN';
+        if (toLabel) toLabel.textContent = 'To JPY';
+        if (fromCountry) fromCountry.textContent = 'Mexico';
+        if (toCountry) toCountry.textContent = 'Japan';
+        if (fromSymbol) fromSymbol.textContent = '$';
+        if (toSymbol) toSymbol.textContent = '¥';
+        if (fromFlag) fromFlag.textContent = 'MX';
+    } else {
+        if (fromLabel) fromLabel.textContent = 'From JPY';
+        if (toLabel) toLabel.textContent = 'To MXN';
+        if (fromCountry) fromCountry.textContent = 'Japan';
+        if (toCountry) toCountry.textContent = 'Mexico';
+        if (fromSymbol) fromSymbol.textContent = '¥';
+        if (toSymbol) toSymbol.textContent = '$';
+        if (fromFlag) fromFlag.textContent = 'JP';
+    }
+
+    applyCardTheme({ isFromJPY: direction === 'JPY_TO_MXN' });
+    
+    updateHomeScreen();
+    updateDisplay();
 }
 
 function saveConversion() {
-    const mxnValue = parseFloat(currentAmount) || 0;
+    const fromValue = parseFloat(currentAmount) || 0;
     
-    if (mxnValue === 0) {
+    if (fromValue === 0) {
         alert('Please enter an amount to convert');
         return;
     }
     
-    const jpyValue = mxnValue * EXCHANGE_RATE;
+    const toValue = direction === 'MXN_TO_JPY' ? (fromValue * EXCHANGE_RATE) : (fromValue / EXCHANGE_RATE);
     const now = new Date();
     
     const conversion = {
-        mxn: mxnValue,
-        jpy: jpyValue,
+        direction,
+        fromValue,
+        toValue,
+        fromCurrency: direction === 'MXN_TO_JPY' ? 'MXN' : 'JPY',
+        toCurrency: direction === 'MXN_TO_JPY' ? 'JPY' : 'MXN',
         rate: EXCHANGE_RATE,
         timestamp: now.getTime(),
         date: formatDate(now),
@@ -117,7 +220,7 @@ function renderHistory() {
         return;
     }
     
-    const total = conversionHistory.reduce((sum, conv) => sum + conv.jpy, 0);
+    const total = conversionHistory.reduce((sum, conv) => sum + (conv.toCurrency === 'JPY' ? conv.toValue : 0), 0);
     totalConverted.textContent = `¥ ${formatNumber(total)}`;
     conversionCount.textContent = `${conversionHistory.length} conversion${conversionHistory.length !== 1 ? 's' : ''} saved`;
     
@@ -134,15 +237,21 @@ function renderHistory() {
         html += `<p class="text-gray-400 text-[10px] font-bold uppercase tracking-widest ml-1 mt-4">${date}</p>`;
         
         groupedByDate[date].forEach(conv => {
+            const fromSymbol = conv.fromCurrency === 'MXN' ? '$' : '¥';
+            const toSymbol = conv.toCurrency === 'MXN' ? '$' : '¥';
+            const displayRate = conv.direction === 'MXN_TO_JPY'
+                ? `1 MXN = ${conv.rate.toFixed(3)} JPY`
+                : `1 JPY = ${(1 / conv.rate).toFixed(4)} MXN`;
+
             html += `
                 <div class="bg-white border border-primary-red/10 rounded-xl p-4 shadow-sm flex items-center justify-between">
                     <div class="flex flex-col">
                         <div class="flex items-center gap-1.5">
-                            <span class="text-primary-red font-bold text-lg">$ ${formatNumber(conv.mxn)}</span>
+                            <span class="text-primary-red font-bold text-lg">${fromSymbol} ${formatNumber(conv.fromValue)}</span>
                             <span class="material-symbols-outlined text-gray-400 text-sm">arrow_forward</span>
-                            <span class="text-gray-900 font-bold text-lg">¥ ${formatNumber(conv.jpy)}</span>
+                            <span class="text-gray-900 font-bold text-lg">${toSymbol} ${formatNumber(conv.toValue)}</span>
                         </div>
-                        <p class="text-gray-400 text-[10px] font-medium mt-0.5">1 MXN = ${conv.rate.toFixed(3)} JPY • ${conv.time}</p>
+                        <p class="text-gray-400 text-[10px] font-medium mt-0.5">${displayRate} • ${conv.time}</p>
                     </div>
                     <div class="h-8 w-8 rounded-full bg-accent-red flex items-center justify-center">
                         <span class="material-symbols-outlined text-primary-red text-sm">history</span>
@@ -172,7 +281,28 @@ function saveToLocalStorage() {
 function loadFromLocalStorage() {
     const saved = localStorage.getItem('conversionHistory');
     if (saved) {
-        conversionHistory = JSON.parse(saved);
+        const parsed = JSON.parse(saved);
+        conversionHistory = Array.isArray(parsed) ? parsed.map(item => {
+            if (item && typeof item === 'object' && ('fromValue' in item) && ('toValue' in item)) {
+                return item;
+            }
+
+            if (item && typeof item === 'object' && ('mxn' in item) && ('jpy' in item)) {
+                return {
+                    direction: 'MXN_TO_JPY',
+                    fromValue: item.mxn,
+                    toValue: item.jpy,
+                    fromCurrency: 'MXN',
+                    toCurrency: 'JPY',
+                    rate: item.rate || EXCHANGE_RATE,
+                    timestamp: item.timestamp || Date.now(),
+                    date: item.date || 'Today',
+                    time: item.time || ''
+                };
+            }
+
+            return item;
+        }) : [];
     }
 }
 
@@ -243,7 +373,11 @@ function updateHomeScreen() {
     
     const rateDisplay = document.getElementById('rate-display');
     if (rateDisplay) {
-        rateDisplay.textContent = `1 MXN = ${EXCHANGE_RATE.toFixed(2)} JPY`;
+        if (direction === 'MXN_TO_JPY') {
+            rateDisplay.textContent = `1 MXN = ${EXCHANGE_RATE.toFixed(2)} JPY`;
+        } else {
+            rateDisplay.textContent = `1 JPY = ${(1 / EXCHANGE_RATE).toFixed(4)} MXN`;
+        }
     }
 }
 
@@ -259,6 +393,8 @@ loadFromLocalStorage();
 loadSavedRate();
 updateHomeScreen();
 updateDisplay();
+
+applyCardTheme({ isFromJPY: direction === 'JPY_TO_MXN' });
 
 fetchExchangeRate();
 
