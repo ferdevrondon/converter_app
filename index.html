@@ -12,6 +12,7 @@
     <link rel="apple-touch-icon" href="icon-192.png">
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     <script id="tailwind-config">
         tailwind.config = {
@@ -20,12 +21,12 @@
                 extend: {
                     colors: {
                         "primary-red": "#E60012",
-                        "deep-red": "#BC002D",
-                        "background-light": "#FFFFFF",
-                        "accent-red": "#FEE2E2",
+                        "deep-red": "#C4001A",
+                        "background-light": "#FFF5F6",
+                        "accent-red": "#FFE1E6",
                     },
                     fontFamily: {
-                        "display": ["Inter"]
+                        "display": ["M PLUS Rounded 1c", "Inter"]
                     },
                     borderRadius: {
                         "DEFAULT": "0.5rem",
@@ -46,6 +47,28 @@
             min-height: max(844px, 100dvh);
             overscroll-behavior: none;
             -webkit-overflow-scrolling: touch;
+            /* background-image:
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='none' stroke='none'%3E%3Cpath d='M24 24c3 0 6 3 6 6s-3 6-6 6-6-3-6-6 3-6 6-6Z' fill='%23E60012' fill-opacity='.10'/%3E%3Cpath d='M86 34c2 0 4 2 4 4s-2 4-4 4-4-2-4-4 2-4 4-4Z' fill='%23C4001A' fill-opacity='.10'/%3E%3Cpath d='M64 86c3 0 6 3 6 6s-3 6-6 6-6-3-6-6 3-6 6-6Z' fill='%23E60012' fill-opacity='.08'/%3E%3Cpath d='M36 78c0-4 4-7 8-4 4-3 8 0 8 4 0 6-8 10-8 10s-8-4-8-10Z' fill='%23E60012' fill-opacity='.08'/%3E%3Cpath d='M96 86l2.4 4.8 5.3.8-3.8 3.7.9 5.3-4.8-2.5-4.8 2.5.9-5.3-3.8-3.7 5.3-.8L96 86Z' fill='%23C4001A' fill-opacity='.06'/%3E%3C/g%3E%3C/svg%3E"),
+                radial-gradient(600px 600px at 20% 10%, rgba(245, 4, 24, 0.14), transparent 60%),
+                radial-gradient(500px 500px at 80% 30%, rgba(255, 255, 255, 0.1), transparent 60%),
+                radial-gradient(700px 700px at 40% 85%, rgba(255, 254, 254, 0.85), transparent 55%);
+            background-repeat: repeat, no-repeat, no-repeat, no-repeat;
+            background-size: 120px 120px, auto, auto, auto; */
+        }
+
+        .kawaii-sticker {
+            pointer-events: none;
+            user-select: none;
+            filter: blur(0px);
+        }
+
+        .kawaii-kaomoji {
+            pointer-events: none;
+            user-select: none;
+            font-weight: 800;
+            letter-spacing: 0.02em;
+            opacity: 0.14;
+            text-shadow: 0 8px 30px rgba(218, 43, 57, 0.16);
         }
         .screen {
             display: none;
@@ -75,27 +98,26 @@
 
 <!-- HOME SCREEN -->
 <div id="home-screen" class="screen active flex-col relative">
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary-red/5 rounded-full blur-3xl -z-10"></div>
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] h-[280px] border border-primary-red/10 rounded-full -z-10"></div>
+    <div class="kawaii-sticker absolute -top-2 left-6 rotate-[-10deg] opacity-20 text-primary-red z-0">
+        <span class="material-symbols-outlined text-[44px]">sweep</span>
+    </div>
+    <div class="kawaii-sticker absolute top-16 right-6 rotate-[14deg] opacity-15 text-deep-red z-0">
+        <span class="material-symbols-outlined text-[42px]">favorite</span>
+    </div>
+    <div class="kawaii-kaomoji absolute bottom-24 left-6 text-primary-red text-[22px] z-0">(｡♥‿♥｡)</div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[520px] h-[520px] bg-primary-red/10 rounded-full blur-3xl -z-10"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] border-2 border-primary-red/15 rounded-full -z-10"></div>
     
     <header class="flex items-center p-6 justify-between z-10">
         <div class="w-10"></div> 
         <div class="flex-1 text-center">
             <span class="text-xs font-bold tracking-[0.3em] uppercase text-primary-red/40 block mb-1">Currency</span>
         </div>
-        <button class="w-10 h-10 flex items-center justify-center text-gray-400">
-            <span class="material-symbols-outlined">account_circle</span>
-        </button>
     </header>
     
     <main class="flex-1 px-8 flex flex-col items-center justify-between py-12 z-10">
-        <div class="w-full text-center mt-4">
-            <h1 class="text-primary-red text-5xl font-extrabold tracking-tight mb-2">Welcome</h1>
-            <p class="text-gray-500 font-medium">Ready to travel?</p>
-        </div>
-        
         <div class="w-full max-w-sm">
-            <div class="bg-white/80 backdrop-blur-md border border-gray-100 rounded-2xl shadow-xl p-8 flex flex-col gap-6">
+            <div class="bg-white/80 backdrop-blur-md border border-primary-red/10 rounded-3xl shadow-xl shadow-primary-red/10 p-8 flex flex-col gap-6">
                 <div class="flex justify-between items-center">
                     <div class="flex flex-col">
                         <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Live Rate</span>
@@ -105,11 +127,11 @@
                             <span class="text-xl font-bold text-gray-800" id="live-rate">8.25 JPY</span>
                         </div>
                     </div>
-                    <button onclick="fetchExchangeRate()" class="w-12 h-12 bg-primary-red/10 rounded-full flex items-center justify-center active:scale-95 transition-transform">
+                    <button onclick="fetchExchangeRate()" class="w-12 h-12 bg-primary-red/10 border border-primary-red/15 rounded-full flex items-center justify-center active:scale-95 transition-transform">
                         <span class="material-symbols-outlined text-primary-red" id="refresh-icon">refresh</span>
                     </button>
                 </div>
-                <div class="h-[1px] w-full bg-gray-100"></div>
+                <div class="h-[1px] w-full bg-primary-red/10"></div>
                 <div class="flex justify-between items-end">
                     <div>
                         <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Last Update</p>
@@ -126,7 +148,7 @@
         </div>
         
         <div class="w-full max-w-sm flex flex-col gap-6">
-            <button onclick="navigateTo('converter')" class="w-full py-5 rounded-2xl bg-gradient-to-r from-primary-red to-deep-red text-white text-lg font-bold shadow-2xl shadow-primary-red/30 active:scale-95 transition-transform flex items-center justify-center gap-3">
+            <button onclick="navigateTo('converter')" class="w-full  mt-2 py-5 rounded-3xl bg-gradient-to-r from-primary-red to-deep-red text-white text-lg font-extrabold shadow-2xl shadow-primary-red/25 active:scale-95 transition-transform flex items-center justify-center gap-3">
                 <span>Start Converting</span>
                 <span class="material-symbols-outlined font-bold">arrow_forward_ios</span>
             </button>
@@ -135,23 +157,24 @@
                     <span class="material-symbols-outlined">history</span>
                     <span class="text-[10px] font-bold uppercase tracking-tighter">History</span>
                 </button>
-                <button class="flex flex-col items-center gap-1">
-                    <span class="material-symbols-outlined">settings</span>
-                    <span class="text-[10px] font-bold uppercase tracking-tighter">Settings</span>
-                </button>
+
             </div>
         </div>
     </main>
     
     <div class="flex justify-center pb-2">
-        <div class="w-32 h-1.5 bg-gray-200 rounded-full"></div>
+        <div class="w-32 h-1.5 bg-primary-red/10 rounded-full"></div>
     </div>
 </div>
 
 <!-- CONVERTER SCREEN -->
 <div id="converter-screen" class="screen flex-col relative">
-    <div class="absolute top-[-50px] right-[-50px] w-64 h-64 bg-primary-red/5 rounded-full -z-10"></div>
-    <div class="absolute bottom-1/4 left-[-100px] w-80 h-80 border border-primary-red/5 rounded-full -z-10"></div>
+    <div class="kawaii-sticker absolute top-16 right-6 rotate-[10deg] opacity-15 text-primary-red z-0">
+        <span class="material-symbols-outlined text-[44px]">star</span>
+    </div>
+    <div class="kawaii-kaomoji absolute bottom-24 right-6 text-deep-red text-[22px] z-0">(≧▽≦)</div>
+    <div class="absolute top-[-50px] right-[-50px] w-64 h-64 bg-primary-red/10 rounded-full -z-10 blur-xl"></div>
+    <div class="absolute bottom-1/4 left-[-100px] w-80 h-80 border-2 border-primary-red/10 rounded-full -z-10"></div>
     
     <header class="flex items-center px-6 pt-12 pb-6 justify-between z-10">
         <button onclick="navigateTo('home')" class="w-10 h-10 flex items-center justify-start text-gray-800">
@@ -167,41 +190,41 @@
     
     <main class="flex-1 px-6 flex flex-col z-10">
         <div class="relative flex flex-col gap-3 my-4">
-            <div class="bg-white border-2 border-gray-100 rounded-3xl p-6 shadow-sm">
+            <div id="from-card" class="bg-white/85 backdrop-blur-md border border-primary-red/10 rounded-3xl p-6 shadow-lg shadow-primary-red/10">
                 <div class="flex justify-between items-center mb-1">
-                    <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">From MXN</span>
+                    <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest" id="from-label">From MXN</span>
                     <div class="flex items-center gap-1.5">
-                        <div class="w-4 h-4 bg-green-600 rounded-full flex items-center justify-center overflow-hidden">
-                            <span class="text-[6px] text-white font-bold">MX</span>
+                        <div class="w-4 h-4 bg-emerald-400 rounded-full flex items-center justify-center overflow-hidden">
+                            <span class="text-[6px] text-white font-bold" id="from-flag">MX</span>
                         </div>
-                        <span class="text-xs font-bold text-gray-500">Mexico</span>
+                        <span class="text-xs font-bold text-gray-500" id="from-country">Mexico</span>
                     </div>
                 </div>
                 <div class="flex items-baseline justify-between">
                     <span class="text-4xl font-extrabold text-black tracking-tight" id="mxn-amount">0.00</span>
-                    <span class="text-lg font-bold text-gray-400">$</span>
+                    <span class="text-lg font-bold text-gray-400" id="from-symbol">$</span>
                 </div>
             </div>
             
             <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
-                <button onclick="swapCurrencies()" class="w-12 h-12 bg-white rounded-full shadow-lg border border-gray-50 flex items-center justify-center active:rotate-180 transition-transform duration-300">
+                <button onclick="swapCurrencies()" class="w-12 h-12 bg-white/90 backdrop-blur-md rounded-full shadow-lg shadow-primary-red/10 border border-primary-red/10 flex items-center justify-center active:rotate-180 transition-transform duration-300">
                     <span class="material-symbols-outlined text-primary-red font-bold">swap_vert</span>
                 </button>
             </div>
             
-            <div class="bg-gradient-to-br from-primary-red to-deep-red rounded-3xl p-6 shadow-xl shadow-primary-red/20">
+            <div id="to-card" class="bg-gradient-to-br from-primary-red to-deep-red rounded-3xl p-6 shadow-xl shadow-primary-red/20">
                 <div class="flex justify-between items-center mb-1">
-                    <span class="text-[10px] font-bold text-white/60 uppercase tracking-widest">To JPY</span>
+                    <span class="text-[10px] font-bold text-white/60 uppercase tracking-widest" id="to-label">To JPY</span>
                     <div class="flex items-center gap-1.5">
                         <div class="w-4 h-4 bg-white rounded-full flex items-center justify-center overflow-hidden">
                             <div class="w-1.5 h-1.5 bg-primary-red rounded-full"></div>
                         </div>
-                        <span class="text-xs font-bold text-white/80">Japan</span>
+                        <span class="text-xs font-bold text-white/80" id="to-country">Japan</span>
                     </div>
                 </div>
                 <div class="flex items-baseline justify-between">
                     <span class="text-4xl font-extrabold text-white tracking-tight" id="jpy-amount">0.00</span>
-                    <span class="text-lg font-bold text-white/60">¥</span>
+                    <span class="text-lg font-bold text-white/60" id="to-symbol">¥</span>
                 </div>
             </div>
         </div>
@@ -213,35 +236,39 @@
         
         <div class="mt-auto pb-8">
             <div class="grid grid-cols-3 gap-y-4 gap-x-8 max-w-[280px] mx-auto">
-                <button onclick="addDigit('1')" class="keypad-button h-16 w-16 rounded-full flex items-center justify-center text-2xl font-semibold text-gray-800 transition-all">1</button>
-                <button onclick="addDigit('2')" class="keypad-button h-16 w-16 rounded-full flex items-center justify-center text-2xl font-semibold text-gray-800 transition-all">2</button>
-                <button onclick="addDigit('3')" class="keypad-button h-16 w-16 rounded-full flex items-center justify-center text-2xl font-semibold text-gray-800 transition-all">3</button>
-                <button onclick="addDigit('4')" class="keypad-button h-16 w-16 rounded-full flex items-center justify-center text-2xl font-semibold text-gray-800 transition-all">4</button>
-                <button onclick="addDigit('5')" class="keypad-button h-16 w-16 rounded-full flex items-center justify-center text-2xl font-semibold text-gray-800 transition-all">5</button>
-                <button onclick="addDigit('6')" class="keypad-button h-16 w-16 rounded-full flex items-center justify-center text-2xl font-semibold text-gray-800 transition-all">6</button>
-                <button onclick="addDigit('7')" class="keypad-button h-16 w-16 rounded-full flex items-center justify-center text-2xl font-semibold text-gray-800 transition-all">7</button>
-                <button onclick="addDigit('8')" class="keypad-button h-16 w-16 rounded-full flex items-center justify-center text-2xl font-semibold text-gray-800 transition-all">8</button>
-                <button onclick="addDigit('9')" class="keypad-button h-16 w-16 rounded-full flex items-center justify-center text-2xl font-semibold text-gray-800 transition-all">9</button>
-                <button onclick="addDigit('.')" class="keypad-button h-16 w-16 rounded-full flex items-center justify-center text-2xl font-semibold text-gray-800 transition-all">.</button>
-                <button onclick="addDigit('0')" class="keypad-button h-16 w-16 rounded-full flex items-center justify-center text-2xl font-semibold text-gray-800 transition-all">0</button>
-                <button onclick="deleteDigit()" class="keypad-button h-16 w-16 rounded-full flex items-center justify-center text-gray-800 transition-all">
+                <button onclick="addDigit('1')" class="keypad-button h-16 w-16 rounded-full bg-white/80 border border-primary-red/10 shadow-sm shadow-primary-red/10 flex items-center justify-center text-2xl font-extrabold text-gray-800 transition-all">1</button>
+                <button onclick="addDigit('2')" class="keypad-button h-16 w-16 rounded-full bg-white/80 border border-primary-red/10 shadow-sm shadow-primary-red/10 flex items-center justify-center text-2xl font-extrabold text-gray-800 transition-all">2</button>
+                <button onclick="addDigit('3')" class="keypad-button h-16 w-16 rounded-full bg-white/80 border border-primary-red/10 shadow-sm shadow-primary-red/10 flex items-center justify-center text-2xl font-extrabold text-gray-800 transition-all">3</button>
+                <button onclick="addDigit('4')" class="keypad-button h-16 w-16 rounded-full bg-white/80 border border-primary-red/10 shadow-sm shadow-primary-red/10 flex items-center justify-center text-2xl font-extrabold text-gray-800 transition-all">4</button>
+                <button onclick="addDigit('5')" class="keypad-button h-16 w-16 rounded-full bg-white/80 border border-primary-red/10 shadow-sm shadow-primary-red/10 flex items-center justify-center text-2xl font-extrabold text-gray-800 transition-all">5</button>
+                <button onclick="addDigit('6')" class="keypad-button h-16 w-16 rounded-full bg-white/80 border border-primary-red/10 shadow-sm shadow-primary-red/10 flex items-center justify-center text-2xl font-extrabold text-gray-800 transition-all">6</button>
+                <button onclick="addDigit('7')" class="keypad-button h-16 w-16 rounded-full bg-white/80 border border-primary-red/10 shadow-sm shadow-primary-red/10 flex items-center justify-center text-2xl font-extrabold text-gray-800 transition-all">7</button>
+                <button onclick="addDigit('8')" class="keypad-button h-16 w-16 rounded-full bg-white/80 border border-primary-red/10 shadow-sm shadow-primary-red/10 flex items-center justify-center text-2xl font-extrabold text-gray-800 transition-all">8</button>
+                <button onclick="addDigit('9')" class="keypad-button h-16 w-16 rounded-full bg-white/80 border border-primary-red/10 shadow-sm shadow-primary-red/10 flex items-center justify-center text-2xl font-extrabold text-gray-800 transition-all">9</button>
+                <button onclick="addDigit('.')" class="keypad-button h-16 w-16 rounded-full bg-white/80 border border-primary-red/10 shadow-sm shadow-primary-red/10 flex items-center justify-center text-2xl font-extrabold text-gray-800 transition-all">.</button>
+                <button onclick="addDigit('0')" class="keypad-button h-16 w-16 rounded-full bg-white/80 border border-primary-red/10 shadow-sm shadow-primary-red/10 flex items-center justify-center text-2xl font-extrabold text-gray-800 transition-all">0</button>
+                <button onclick="deleteDigit()" class="keypad-button h-16 w-16 rounded-full bg-white/80 border border-primary-red/10 shadow-sm shadow-primary-red/10 flex items-center justify-center text-gray-800 transition-all">
                     <span class="material-symbols-outlined text-2xl">backspace</span>
                 </button>
             </div>
-            <button onclick="saveConversion()" class="w-full mt-6 py-4 rounded-2xl bg-gradient-to-r from-primary-red to-deep-red text-white text-base font-bold shadow-xl shadow-primary-red/20 active:scale-95 transition-transform">
+            <button onclick="saveConversion()" class="w-full mt-6 py-4 rounded-3xl bg-gradient-to-r from-primary-red to-deep-red text-white text-base font-extrabold shadow-xl shadow-primary-red/20 active:scale-95 transition-transform">
                 Save Conversion
             </button>
         </div>
     </main>
     
     <div class="flex justify-center pb-2">
-        <div class="w-32 h-1.5 bg-gray-200 rounded-full"></div>
+        <div class="w-32 h-1.5 bg-primary-red/10 rounded-full"></div>
     </div>
 </div>
 
 <!-- HISTORY SCREEN -->
 <div id="history-screen" class="screen flex-col overflow-y-auto">
-    <header class="flex items-center bg-white p-4 pb-2 justify-between border-b border-gray-100 sticky top-0 z-10">
+    <div class="kawaii-sticker absolute top-20 left-4 rotate-[-8deg] opacity-15 text-primary-red z-0">
+        <span class="material-symbols-outlined text-[44px]">auto_awesome</span>
+    </div>
+    <div class="kawaii-kaomoji absolute top-24 right-6 text-primary-red text-[20px] z-0">(づ｡◕‿‿◕｡)づ</div>
+    <header class="flex items-center bg-white/80 backdrop-blur-md p-4 pb-2 justify-between border-b border-primary-red/10 sticky top-0 z-10">
         <button onclick="navigateTo('home')" class="w-8 h-8 flex items-center justify-center text-primary-red">
             <span class="material-symbols-outlined">arrow_back_ios</span>
         </button>
@@ -252,7 +279,7 @@
     </header>
     
     <main class="flex-1 p-4 flex flex-col gap-4">
-        <div class="rounded-2xl bg-gradient-to-br from-[#E63946] to-[#ff6b6b] p-5 shadow-md flex items-center justify-between overflow-hidden relative">
+        <div class="rounded-3xl bg-gradient-to-br from-primary-red to-deep-red p-5 shadow-xl shadow-primary-red/15 flex items-center justify-between overflow-hidden relative">
             <div class="relative z-10">
                 <p class="text-white/80 text-xs font-bold uppercase tracking-widest mb-1">Total Converted</p>
                 <h3 class="text-white text-2xl font-black" id="total-converted">¥ 0.00</h3>
@@ -276,7 +303,7 @@
     </main>
     
     <div class="flex justify-center pb-2">
-        <div class="w-32 h-1 bg-gray-200 rounded-full"></div>
+        <div class="w-32 h-1 bg-primary-red/10 rounded-full"></div>
     </div>
 </div>
 
