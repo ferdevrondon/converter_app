@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="MXN to JPY">
+    <meta name="theme-color" content="#E60012">
+    <title>MXN to JPY Converter</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary-red": "#E60012",
+                        "deep-red": "#BC002D",
+                        "background-light": "#FFFFFF",
+                        "accent-red": "#FEE2E2",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "2xl": "2rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            min-height: max(844px, 100dvh);
+            overscroll-behavior: none;
+            -webkit-overflow-scrolling: touch;
+        }
+        .screen {
+            display: none;
+        }
+        .screen.active {
+            display: flex;
+        }
+        .keypad-button:active {
+            background-color: #f3f4f6;
+            transform: scale(0.95);
+        }
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .spinning {
+            animation: spin 1s linear infinite;
+        }
+    </style>
+</head>
+<body class="bg-background-light font-display min-h-screen flex flex-col overflow-hidden">
+
+<!-- HOME SCREEN -->
+<div id="home-screen" class="screen active flex-col relative">
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary-red/5 rounded-full blur-3xl -z-10"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] h-[280px] border border-primary-red/10 rounded-full -z-10"></div>
+    
+    <header class="flex items-center p-6 justify-between z-10">
+        <div class="w-10"></div> 
+        <div class="flex-1 text-center">
+            <span class="text-xs font-bold tracking-[0.3em] uppercase text-primary-red/40 block mb-1">Currency</span>
+        </div>
+        <button class="w-10 h-10 flex items-center justify-center text-gray-400">
+            <span class="material-symbols-outlined">account_circle</span>
+        </button>
+    </header>
+    
+    <main class="flex-1 px-8 flex flex-col items-center justify-between py-12 z-10">
+        <div class="w-full text-center mt-4">
+            <h1 class="text-primary-red text-5xl font-extrabold tracking-tight mb-2">Welcome</h1>
+            <p class="text-gray-500 font-medium">Ready to travel?</p>
+        </div>
+        
+        <div class="w-full max-w-sm">
+            <div class="bg-white/80 backdrop-blur-md border border-gray-100 rounded-2xl shadow-xl p-8 flex flex-col gap-6">
+                <div class="flex justify-between items-center">
+                    <div class="flex flex-col">
+                        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Live Rate</span>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xl font-bold text-gray-800">1 MXN</span>
+                            <span class="material-symbols-outlined text-primary-red text-sm">trending_flat</span>
+                            <span class="text-xl font-bold text-gray-800" id="live-rate">8.25 JPY</span>
+                        </div>
+                    </div>
+                    <button onclick="fetchExchangeRate()" class="w-12 h-12 bg-primary-red/10 rounded-full flex items-center justify-center active:scale-95 transition-transform">
+                        <span class="material-symbols-outlined text-primary-red" id="refresh-icon">refresh</span>
+                    </button>
+                </div>
+                <div class="h-[1px] w-full bg-gray-100"></div>
+                <div class="flex justify-between items-end">
+                    <div>
+                        <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Last Update</p>
+                        <p class="text-xs text-gray-600" id="last-update">Today, 10:45 AM</p>
+                    </div>
+                    <div class="flex -space-x-2">
+                        <div class="w-8 h-8 rounded-full border-2 border-white bg-green-600 flex items-center justify-center text-[10px] text-white font-bold">MX</div>
+                        <div class="w-8 h-8 rounded-full border-2 border-white bg-white flex items-center justify-center overflow-hidden border border-gray-100">
+                            <div class="w-3 h-3 bg-primary-red rounded-full"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="w-full max-w-sm flex flex-col gap-6">
+            <button onclick="navigateTo('converter')" class="w-full py-5 rounded-2xl bg-gradient-to-r from-primary-red to-deep-red text-white text-lg font-bold shadow-2xl shadow-primary-red/30 active:scale-95 transition-transform flex items-center justify-center gap-3">
+                <span>Start Converting</span>
+                <span class="material-symbols-outlined font-bold">arrow_forward_ios</span>
+            </button>
+            <div class="flex justify-center gap-8 text-gray-400">
+                <button onclick="navigateTo('history')" class="flex flex-col items-center gap-1">
+                    <span class="material-symbols-outlined">history</span>
+                    <span class="text-[10px] font-bold uppercase tracking-tighter">History</span>
+                </button>
+                <button class="flex flex-col items-center gap-1">
+                    <span class="material-symbols-outlined">settings</span>
+                    <span class="text-[10px] font-bold uppercase tracking-tighter">Settings</span>
+                </button>
+            </div>
+        </div>
+    </main>
+    
+    <div class="flex justify-center pb-2">
+        <div class="w-32 h-1.5 bg-gray-200 rounded-full"></div>
+    </div>
+</div>
+
+<!-- CONVERTER SCREEN -->
+<div id="converter-screen" class="screen flex-col relative">
+    <div class="absolute top-[-50px] right-[-50px] w-64 h-64 bg-primary-red/5 rounded-full -z-10"></div>
+    <div class="absolute bottom-1/4 left-[-100px] w-80 h-80 border border-primary-red/5 rounded-full -z-10"></div>
+    
+    <header class="flex items-center px-6 pt-12 pb-6 justify-between z-10">
+        <button onclick="navigateTo('home')" class="w-10 h-10 flex items-center justify-start text-gray-800">
+            <span class="material-symbols-outlined">arrow_back_ios</span>
+        </button>
+        <div class="flex-1 text-center">
+            <h1 class="text-sm font-bold tracking-[0.2em] uppercase text-gray-800">Converter</h1>
+        </div>
+        <button class="w-10 h-10 flex items-center justify-end text-gray-800">
+            <span class="material-symbols-outlined">more_horiz</span>
+        </button>
+    </header>
+    
+    <main class="flex-1 px-6 flex flex-col z-10">
+        <div class="relative flex flex-col gap-3 my-4">
+            <div class="bg-white border-2 border-gray-100 rounded-3xl p-6 shadow-sm">
+                <div class="flex justify-between items-center mb-1">
+                    <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">From MXN</span>
+                    <div class="flex items-center gap-1.5">
+                        <div class="w-4 h-4 bg-green-600 rounded-full flex items-center justify-center overflow-hidden">
+                            <span class="text-[6px] text-white font-bold">MX</span>
+                        </div>
+                        <span class="text-xs font-bold text-gray-500">Mexico</span>
+                    </div>
+                </div>
+                <div class="flex items-baseline justify-between">
+                    <span class="text-4xl font-extrabold text-black tracking-tight" id="mxn-amount">0.00</span>
+                    <span class="text-lg font-bold text-gray-400">$</span>
+                </div>
+            </div>
+            
+            <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
+                <button onclick="swapCurrencies()" class="w-12 h-12 bg-white rounded-full shadow-lg border border-gray-50 flex items-center justify-center active:rotate-180 transition-transform duration-300">
+                    <span class="material-symbols-outlined text-primary-red font-bold">swap_vert</span>
+                </button>
+            </div>
+            
+            <div class="bg-gradient-to-br from-primary-red to-deep-red rounded-3xl p-6 shadow-xl shadow-primary-red/20">
+                <div class="flex justify-between items-center mb-1">
+                    <span class="text-[10px] font-bold text-white/60 uppercase tracking-widest">To JPY</span>
+                    <div class="flex items-center gap-1.5">
+                        <div class="w-4 h-4 bg-white rounded-full flex items-center justify-center overflow-hidden">
+                            <div class="w-1.5 h-1.5 bg-primary-red rounded-full"></div>
+                        </div>
+                        <span class="text-xs font-bold text-white/80">Japan</span>
+                    </div>
+                </div>
+                <div class="flex items-baseline justify-between">
+                    <span class="text-4xl font-extrabold text-white tracking-tight" id="jpy-amount">0.00</span>
+                    <span class="text-lg font-bold text-white/60">¥</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center py-4">
+            <p class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.15em]">Mid-market exchange rate</p>
+            <p class="text-xs font-medium text-gray-600 mt-1" id="rate-display">1 MXN = 8.25 JPY</p>
+        </div>
+        
+        <div class="mt-auto pb-8">
+            <div class="grid grid-cols-3 gap-y-4 gap-x-8 max-w-[280px] mx-auto">
+                <button onclick="addDigit('1')" class="keypad-button h-16 w-16 rounded-full flex items-center justify-center text-2xl font-semibold text-gray-800 transition-all">1</button>
+                <button onclick="addDigit('2')" class="keypad-button h-16 w-16 rounded-full flex items-center justify-center text-2xl font-semibold text-gray-800 transition-all">2</button>
+                <button onclick="addDigit('3')" class="keypad-button h-16 w-16 rounded-full flex items-center justify-center text-2xl font-semibold text-gray-800 transition-all">3</button>
+                <button onclick="addDigit('4')" class="keypad-button h-16 w-16 rounded-full flex items-center justify-center text-2xl font-semibold text-gray-800 transition-all">4</button>
+                <button onclick="addDigit('5')" class="keypad-button h-16 w-16 rounded-full flex items-center justify-center text-2xl font-semibold text-gray-800 transition-all">5</button>
+                <button onclick="addDigit('6')" class="keypad-button h-16 w-16 rounded-full flex items-center justify-center text-2xl font-semibold text-gray-800 transition-all">6</button>
+                <button onclick="addDigit('7')" class="keypad-button h-16 w-16 rounded-full flex items-center justify-center text-2xl font-semibold text-gray-800 transition-all">7</button>
+                <button onclick="addDigit('8')" class="keypad-button h-16 w-16 rounded-full flex items-center justify-center text-2xl font-semibold text-gray-800 transition-all">8</button>
+                <button onclick="addDigit('9')" class="keypad-button h-16 w-16 rounded-full flex items-center justify-center text-2xl font-semibold text-gray-800 transition-all">9</button>
+                <button onclick="addDigit('.')" class="keypad-button h-16 w-16 rounded-full flex items-center justify-center text-2xl font-semibold text-gray-800 transition-all">.</button>
+                <button onclick="addDigit('0')" class="keypad-button h-16 w-16 rounded-full flex items-center justify-center text-2xl font-semibold text-gray-800 transition-all">0</button>
+                <button onclick="deleteDigit()" class="keypad-button h-16 w-16 rounded-full flex items-center justify-center text-gray-800 transition-all">
+                    <span class="material-symbols-outlined text-2xl">backspace</span>
+                </button>
+            </div>
+            <button onclick="saveConversion()" class="w-full mt-6 py-4 rounded-2xl bg-gradient-to-r from-primary-red to-deep-red text-white text-base font-bold shadow-xl shadow-primary-red/20 active:scale-95 transition-transform">
+                Save Conversion
+            </button>
+        </div>
+    </main>
+    
+    <div class="flex justify-center pb-2">
+        <div class="w-32 h-1.5 bg-gray-200 rounded-full"></div>
+    </div>
+</div>
+
+<!-- HISTORY SCREEN -->
+<div id="history-screen" class="screen flex-col overflow-y-auto">
+    <header class="flex items-center bg-white p-4 pb-2 justify-between border-b border-gray-100 sticky top-0 z-10">
+        <button onclick="navigateTo('home')" class="w-8 h-8 flex items-center justify-center text-primary-red">
+            <span class="material-symbols-outlined">arrow_back_ios</span>
+        </button>
+        <h2 class="text-[#111418] text-lg font-bold leading-tight tracking-tight flex-1 text-center">Conversion History</h2>
+        <button onclick="clearHistory()" class="text-primary-red text-sm font-semibold px-2">
+            Clear
+        </button>
+    </header>
+    
+    <main class="flex-1 p-4 flex flex-col gap-4">
+        <div class="rounded-2xl bg-gradient-to-br from-[#E63946] to-[#ff6b6b] p-5 shadow-md flex items-center justify-between overflow-hidden relative">
+            <div class="relative z-10">
+                <p class="text-white/80 text-xs font-bold uppercase tracking-widest mb-1">Total Converted</p>
+                <h3 class="text-white text-2xl font-black" id="total-converted">¥ 0.00</h3>
+                <p class="text-white/90 text-[10px] mt-1" id="conversion-count">0 conversions saved</p>
+            </div>
+            <div class="relative z-10 h-12 w-12 rounded-full bg-white/20 flex items-center justify-center">
+                <span class="material-symbols-outlined text-white text-3xl">trending_up</span>
+            </div>
+            <div class="absolute -right-4 -bottom-4 w-24 h-24 bg-white/10 rounded-full blur-2xl"></div>
+        </div>
+        
+        <div id="history-list" class="flex flex-col gap-3">
+            <p class="text-gray-400 text-center text-sm mt-8">No conversions yet</p>
+        </div>
+        
+        <div class="mt-8 flex justify-center pb-8">
+            <button onclick="clearHistory()" class="text-primary-red text-sm font-bold tracking-tight uppercase">
+                Clear All History
+            </button>
+        </div>
+    </main>
+    
+    <div class="flex justify-center pb-2">
+        <div class="w-32 h-1 bg-gray-200 rounded-full"></div>
+    </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

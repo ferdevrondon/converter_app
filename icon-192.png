@@ -1,0 +1,7 @@
+<svg width="192" height="192" xmlns="http://www.w3.org/2000/svg">
+  <rect width="192" height="192" fill="#E60012" rx="40"/>
+  <text x="96" y="80" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="white" text-anchor="middle">$</text>
+  <path d="M 60 110 L 132 110" stroke="white" stroke-width="4" stroke-linecap="round"/>
+  <path d="M 120 100 L 132 110 L 120 120" stroke="white" stroke-width="4" stroke-linecap="round" fill="none"/>
+  <text x="96" y="160" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="white" text-anchor="middle">¥</text>
+</svg>
