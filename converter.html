@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Converter Screen</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary-red": "#E60012",
+                        "deep-red": "#BC002D",
+                        "background-light": "#FFFFFF",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "2xl": "2rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            min-height: max(844px, 100dvh);
+        }
+        .keypad-button:active {
+            background-color: #f3f4f6;
+            transform: scale(0.95);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light font-display min-h-screen flex flex-col overflow-hidden relative">
+<div class="absolute top-[-50px] right-[-50px] w-64 h-64 bg-primary-red/5 rounded-full -z-10"></div>
+<div class="absolute bottom-1/4 left-[-100px] w-80 h-80 border border-primary-red/5 rounded-full -z-10"></div>
+<header class="flex items-center px-6 pt-12 pb-6 justify-between z-10">
+<button class="w-10 h-10 flex items-center justify-start text-gray-800">
+<span class="material-symbols-outlined">arrow_back_ios</span>
+</button>
+<div class="flex-1 text-center">
+<h1 class="text-sm font-bold tracking-[0.2em] uppercase text-gray-800">Converter</h1>
+</div>
+<button class="w-10 h-10 flex items-center justify-end text-gray-800">
+<span class="material-symbols-outlined">more_horiz</span>
+</button>
+</header>
+<main class="flex-1 px-6 flex flex-col z-10">
+<div class="relative flex flex-col gap-3 my-4">
+<div class="bg-white border-2 border-gray-100 rounded-3xl p-6 shadow-sm">
+<div class="flex justify-between items-center mb-1">
+<span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">From PHP</span>
+<div class="flex items-center gap-1.5">
+<div class="w-4 h-4 bg-blue-600 rounded-full flex items-center justify-center overflow-hidden">
+<span class="text-[6px] text-white font-bold">PH</span>
+</div>
+<span class="text-xs font-bold text-gray-500">Philippines</span>
+</div>
+</div>
+<div class="flex items-baseline justify-between">
+<span class="text-4xl font-extrabold text-black tracking-tight">500.00</span>
+<span class="text-lg font-bold text-gray-400">₱</span>
+</div>
+</div>
+<div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
+<button class="w-12 h-12 bg-white rounded-full shadow-lg border border-gray-50 flex items-center justify-center active:rotate-180 transition-transform duration-300">
+<span class="material-symbols-outlined text-primary-red font-bold">swap_vert</span>
+</button>
+</div>
+<div class="bg-gradient-to-br from-primary-red to-deep-red rounded-3xl p-6 shadow-xl shadow-primary-red/20">
+<div class="flex justify-between items-center mb-1">
+<span class="text-[10px] font-bold text-white/60 uppercase tracking-widest">To JPY</span>
+<div class="flex items-center gap-1.5">
+<div class="w-4 h-4 bg-white rounded-full flex items-center justify-center overflow-hidden">
+<div class="w-1.5 h-1.5 bg-primary-red rounded-full"></div>
+</div>
+<span class="text-xs font-bold text-white/80">Japan</span>
+</div>
+</div>
+<div class="flex items-baseline justify-between">
+<span class="text-4xl font-extrabold text-white tracking-tight">1,305.50</span>
+<span class="text-lg font-bold text-white/60">¥</span>
+</div>
+</div>
+</div>
+<div class="text-center py-4">
+<p class="text-[10px] font-bold text-gray-400 uppercase tracking-[0.15em]">Mid-market exchange rate</p>
+<p class="text-xs font-medium text-gray-600 mt-1">1 PHP = 2.611 JPY</p>
+</div>
+<div class="mt-auto pb-8">
+<div class="grid grid-cols-3 gap-y-4 gap-x-8 max-w-[280px] mx-auto">
+<button class="keypad-button h-16 w-16 rounded-full flex items-center justify-center text-2xl font-semibold text-gray-800 transition-all">1</button>
+<button class="keypad-button h-16 w-16 rounded-full flex items-center justify-center text-2xl font-semibold text-gray-800 transition-all">2</button>
+<button class="keypad-button h-16 w-16 rounded-full flex items-center justify-center text-2xl font-semibold text-gray-800 transition-all">3</button>
+<button class="keypad-button h-16 w-16 rounded-full flex items-center justify-center text-2xl font-semibold text-gray-800 transition-all">4</button>
+<button class="keypad-button h-16 w-16 rounded-full flex items-center justify-center text-2xl font-semibold text-gray-800 transition-all">5</button>
+<button class="keypad-button h-16 w-16 rounded-full flex items-center justify-center text-2xl font-semibold text-gray-800 transition-all">6</button>
+<button class="keypad-button h-16 w-16 rounded-full flex items-center justify-center text-2xl font-semibold text-gray-800 transition-all">7</button>
+<button class="keypad-button h-16 w-16 rounded-full flex items-center justify-center text-2xl font-semibold text-gray-800 transition-all">8</button>
+<button class="keypad-button h-16 w-16 rounded-full flex items-center justify-center text-2xl font-semibold text-gray-800 transition-all">9</button>
+<button class="keypad-button h-16 w-16 rounded-full flex items-center justify-center text-2xl font-semibold text-gray-800 transition-all">.</button>
+<button class="keypad-button h-16 w-16 rounded-full flex items-center justify-center text-2xl font-semibold text-gray-800 transition-all">0</button>
+<button class="keypad-button h-16 w-16 rounded-full flex items-center justify-center text-gray-800 transition-all">
+<span class="material-symbols-outlined text-2xl">backspace</span>
+</button>
+</div>
+</div>
+</main>
+<div class="flex justify-center pb-2">
+<div class="w-32 h-1.5 bg-gray-200 rounded-full"></div>
+</div>
+
+</body></html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Themed History Log</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary-red": "#E63946",
+                        "accent-red": "#FEE2E2",
+                        "background-light": "#FAFAFA",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            min-height: 100dvh;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light font-display min-h-screen flex flex-col overflow-x-hidden">
+<header class="flex items-center bg-white p-4 pb-2 justify-between border-b border-gray-100">
+<button class="w-8 h-8 flex items-center justify-center text-primary-red">
+<span class="material-symbols-outlined">arrow_back_ios</span>
+</button>
+<h2 class="text-[#111418] text-lg font-bold leading-tight tracking-tight flex-1 text-center">Conversion History</h2>
+<button class="text-primary-red text-sm font-semibold px-2">
+            Clear
+        </button>
+</header>
+<main class="flex-1 p-4 flex flex-col gap-4">
+<div class="rounded-2xl bg-gradient-to-br from-[#E63946] to-[#ff6b6b] p-5 shadow-md flex items-center justify-between overflow-hidden relative">
+<div class="relative z-10">
+<p class="text-white/80 text-xs font-bold uppercase tracking-widest mb-1">Weekly Savings</p>
+<h3 class="text-white text-2xl font-black">¥ 12,450.00</h3>
+<p class="text-white/90 text-[10px] mt-1">Saved from conversions this week</p>
+</div>
+<div class="relative z-10 h-12 w-12 rounded-full bg-white/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-3xl">trending_up</span>
+</div>
+<div class="absolute -right-4 -bottom-4 w-24 h-24 bg-white/10 rounded-full blur-2xl"></div>
+</div>
+<div class="flex flex-col gap-3">
+<p class="text-gray-400 text-[10px] font-bold uppercase tracking-widest ml-1 mt-2">Today</p>
+<div class="bg-white border border-primary-red/10 rounded-xl p-4 shadow-sm flex items-center justify-between">
+<div class="flex flex-col">
+<div class="flex items-center gap-1.5">
+<span class="text-primary-red font-bold text-lg">₱ 1,000</span>
+<span class="material-symbols-outlined text-gray-400 text-sm">arrow_forward</span>
+<span class="text-gray-900 font-bold text-lg">¥ 2,615.42</span>
+</div>
+<p class="text-gray-400 text-[10px] font-medium mt-0.5">1 PHP = 2.615 JPY • 10:42 AM</p>
+</div>
+<div class="h-8 w-8 rounded-full bg-accent-red flex items-center justify-center">
+<span class="material-symbols-outlined text-primary-red text-sm">history</span>
+</div>
+</div>
+<div class="bg-white border border-primary-red/10 rounded-xl p-4 shadow-sm flex items-center justify-between">
+<div class="flex flex-col">
+<div class="flex items-center gap-1.5">
+<span class="text-primary-red font-bold text-lg">₱ 500</span>
+<span class="material-symbols-outlined text-gray-400 text-sm">arrow_forward</span>
+<span class="text-gray-900 font-bold text-lg">¥ 1,307.71</span>
+</div>
+<p class="text-gray-400 text-[10px] font-medium mt-0.5">1 PHP = 2.615 JPY • 09:15 AM</p>
+</div>
+<div class="h-8 w-8 rounded-full bg-accent-red flex items-center justify-center">
+<span class="material-symbols-outlined text-primary-red text-sm">history</span>
+</div>
+</div>
+<p class="text-gray-400 text-[10px] font-bold uppercase tracking-widest ml-1 mt-4">Yesterday</p>
+<div class="bg-white border border-primary-red/10 rounded-xl p-4 shadow-sm flex items-center justify-between">
+<div class="flex flex-col">
+<div class="flex items-center gap-1.5">
+<span class="text-primary-red font-bold text-lg">₱ 2,500</span>
+<span class="material-symbols-outlined text-gray-400 text-sm">arrow_forward</span>
+<span class="text-gray-900 font-bold text-lg">¥ 6,538.55</span>
+</div>
+<p class="text-gray-400 text-[10px] font-medium mt-0.5">1 PHP = 2.615 JPY • 04:30 PM</p>
+</div>
+<div class="h-8 w-8 rounded-full bg-accent-red flex items-center justify-center">
+<span class="material-symbols-outlined text-primary-red text-sm">history</span>
+</div>
+</div>
+<div class="bg-white border border-primary-red/10 rounded-xl p-4 shadow-sm flex items-center justify-between">
+<div class="flex flex-col">
+<div class="flex items-center gap-1.5">
+<span class="text-primary-red font-bold text-lg">₱ 10,000</span>
+<span class="material-symbols-outlined text-gray-400 text-sm">arrow_forward</span>
+<span class="text-gray-900 font-bold text-lg">¥ 26,154.20</span>
+</div>
+<p class="text-gray-400 text-[10px] font-medium mt-0.5">1 PHP = 2.615 JPY • 11:20 AM</p>
+</div>
+<div class="h-8 w-8 rounded-full bg-accent-red flex items-center justify-center">
+<span class="material-symbols-outlined text-primary-red text-sm">history</span>
+</div>
+</div>
+</div>
+<div class="mt-8 flex justify-center pb-8">
+<button class="text-primary-red text-sm font-bold tracking-tight uppercase">
+                Clear All History
+            </button>
+</div>
+</main>
+<div class="flex justify-center pb-2">
+<div class="w-32 h-1 bg-gray-200 rounded-full"></div>
+</div>
+
+</body></html>
